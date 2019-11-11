@@ -4,7 +4,7 @@ require_once 'php_action/db_connect.php';
 session_start();
 
 if(isset($_SESSION['userId'])) {
-	header('location: dashboard.php');	
+	header('location:dashboard.php');	
 }
 
 $errors = array();
@@ -45,7 +45,7 @@ if($_POST) {
 				$errors[] = "Incorrect username/password combination";
 			} // /else
 		} else {		
-			$errors[] = "Username does not exists";		
+			$errors[] = "Username doesnot exists";		
 		} // /else
 	} // /else not empty username // password
 	
@@ -58,13 +58,25 @@ if($_POST) {
 	<title>Inventory Management System</title>
 
 	<!-- bootstrap -->
-	<link rel="stylesheet" href="assests/bootstrap/css1/bootstrap.css">
-    <link rel="stylesheet" href="assests/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="custom/css/custom1.css">
-	
+	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap.min.css">
+	<!-- bootstrap theme-->
+	<link rel="stylesheet" href="assests/bootstrap/css/bootstrap-theme.min.css">
+	<!-- font awesome -->
+	<link rel="stylesheet" href="assests/font-awesome/css/font-awesome.min.css">
+
+  <!-- custom css -->
+  <link rel="stylesheet" href="custom/css/custom.css">	
+
+  <!-- jquery -->
+	<script src="assests/jquery/jquery.min.js"></script>
+  <!-- jquery ui -->  
+  <link rel="stylesheet" href="assests/jquery-ui/jquery-ui.min.css">
+  <script src="assests/jquery-ui/jquery-ui.min.js"></script>
+
+  <!-- bootstrap js -->
+	<script src="assests/bootstrap/js/bootstrap.min.js"></script>
 </head>
-    
-    <body>
+  <body>
 	
         <div id="home" class="home-bg" style="background-color: #000000;
 background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);">
@@ -143,6 +155,7 @@ background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);">
                 </div>
             
             </div>
+      
             
         
         

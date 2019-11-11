@@ -45,6 +45,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <!-- <a class="navbar-brand" href="#">Brand</a> -->
+
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,7 +73,7 @@
           </ul>
         </li> 
 		
-	 
+
         <li class="dropdown" id="navSetting">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="glyphicon glyphicon-user"></i> <span class="caret"></span></a>
           <ul class="dropdown-menu">    

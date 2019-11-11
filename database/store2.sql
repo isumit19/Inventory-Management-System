@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2019 at 04:15 AM
+-- Generation Time: Nov 11, 2019 at 02:48 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `store`
+-- Database: `store2`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,9 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`brand_id`, `brand_name`, `brand_active`, `brand_status`) VALUES
-(1, 'ZX', 1, 1);
+(1, 'Nike', 1, 1),
+(2, 'Adidas', 1, 1),
+(3, 'Levis', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,9 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`categories_id`, `categories_name`, `categories_active`, `categories_status`) VALUES
-(1, 'Clothes', 1, 1);
+(1, 'Shirt', 1, 1),
+(2, 'Pants', 1, 1),
+(3, 'T-Shirt', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -74,15 +78,12 @@ CREATE TABLE `orders` (
   `client_name` varchar(255) NOT NULL,
   `client_contact` varchar(255) NOT NULL,
   `sub_total` varchar(255) NOT NULL,
-  `vat` varchar(255) NOT NULL,
   `total_amount` varchar(255) NOT NULL,
   `discount` varchar(255) NOT NULL,
   `grand_total` varchar(255) NOT NULL,
   `paid` varchar(255) NOT NULL,
   `due` varchar(255) NOT NULL,
   `payment_type` int(11) NOT NULL,
-  `payment_status` int(11) NOT NULL,
-  `payment_place` int(11) NOT NULL,
   `gstn` varchar(255) NOT NULL,
   `order_status` int(11) NOT NULL DEFAULT 0,
   `user_id` int(11) NOT NULL
@@ -92,12 +93,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `order_date`, `client_name`, `client_contact`, `sub_total`, `vat`, `total_amount`, `discount`, `grand_total`, `paid`, `due`, `payment_type`, `payment_status`, `payment_place`, `gstn`, `order_status`, `user_id`) VALUES
-(43, '2019-11-09', 'WW', 'AS', '200.00', '36.00', '236.00', '0', '236.00', '2000', '-1764.00', 1, 1, 1, '36.00', 1, 1),
-(44, '2019-11-09', 'WW', 'WW', '1400.00', '252.00', '1652.00', '0', '1652.00', '5000', '-3348.00', 1, 1, 1, '252.00', 1, 1),
-(45, '2019-11-09', 'WW', 'WW', '400.00', '72.00', '472.00', '0', '472.00', '1000', '-528.00', 1, 1, 1, '72.00', 1, 1),
-(46, '2019-11-09', 'WW', 'WW', '6000.00', '1080.00', '7080.00', '0', '7080.00', '4000', '3080.00', 1, 1, 1, '1080.00', 1, 1),
-(47, '2019-11-09', 'WW', 'WW', '1000.00', '180.00', '1180.00', '0', '1180.00', '1000', '180.00', 1, 1, 1, '180.00', 1, 1);
+INSERT INTO `orders` (`order_id`, `order_date`, `client_name`, `client_contact`, `sub_total`, `total_amount`, `discount`, `grand_total`, `paid`, `due`, `payment_type`, `gstn`, `order_status`, `user_id`) VALUES
+(1, '2019-11-11', 'Ram', '9812244847', '3200.00', '3776.00', '300', '3476.00', '3500', '-24.00', 2, '576.00', 1, 1),
+(2, '2019-11-07', 'Shyam Sharm', '8708741206', '3300.00', '3894.00', '100', '3794.00', '4000', '-206.00', 3, '594.00', 1, 1),
+(3, '2019-11-12', 'Soni', '0000000000', '800.00', '944.00', '50', '894.00', '900', '-6.00', 2, '144.00', 1, 11);
 
 -- --------------------------------------------------------
 
@@ -120,11 +119,11 @@ CREATE TABLE `order_item` (
 --
 
 INSERT INTO `order_item` (`order_item_id`, `order_id`, `product_id`, `quantity`, `rate`, `total`, `order_item_status`) VALUES
-(43, 43, 1, '1', '200', '200.00', 1),
-(44, 44, 1, '7', '200', '1400.00', 1),
-(45, 45, 1, '2', '200', '400.00', 1),
-(46, 46, 1, '30', '200', '6000.00', 1),
-(47, 47, 1, '5', '200', '1000.00', 1);
+(1, 1, 1, '1', '800', '800.00', 1),
+(2, 1, 3, '2', '1200', '2400.00', 1),
+(3, 2, 2, '3', '700', '2100.00', 1),
+(4, 2, 3, '1', '1200', '1200.00', 1),
+(5, 3, 1, '1', '800', '800.00', 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +148,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `product_image`, `brand_id`, `categories_id`, `quantity`, `rate`, `active`, `status`) VALUES
-(1, 'Shirt', '../assests/images/stock/13775769595dc52fc27d5b1.png', 1, 1, '0', '200', 1, 1);
+(1, 'Shirt XL', '../assests/images/stock/12926066305dc9657eae2e7.jpg', 1, 1, '23', '800', 1, 1),
+(2, 'TShirt L', '../assests/images/stock/774213185dc965ac936f9.jpg', 2, 3, '27', '700', 1, 1),
+(3, 'Jeans 32', '../assests/images/stock/4131115665dc965cd85c7c.jpg', 3, 2, '12', '1200', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -170,7 +171,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`) VALUES
 (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', ''),
-(11, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'user@gmail.com');
+(11, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', '');
 
 --
 -- Indexes for dumped tables
@@ -220,31 +221,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `brand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `categories_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `categories_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

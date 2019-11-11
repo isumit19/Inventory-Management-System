@@ -10,16 +10,16 @@ $orderSql = "SELECT * FROM orders WHERE order_status = 1";
 $orderQuery = $connect->query($orderSql);
 $countOrder = $orderQuery->num_rows;
 
-$totalRevenue = 0;
+$totalRevenue =  0;
 while ($orderResult = $orderQuery->fetch_assoc()) {
-	$totalRevenue += $orderResult['total_amount'];
+	$totalRevenue += $orderResult['grand_total'];
 }
 
 $lowStockSql = "SELECT * FROM product WHERE quantity <= 3 AND status = 1";
 $lowStockQuery = $connect->query($lowStockSql);
 $countLowStock = $lowStockQuery->num_rows;
 
-$userwisesql = "SELECT users.username , SUM(orders.total_amount) as totalorder FROM orders INNER JOIN users ON orders.user_id = users.user_id WHERE orders.order_status = 1 GROUP BY orders.user_id";
+$userwisesql = "SELECT users.username , SUM(orders.grand_total) as totalorder FROM orders INNER JOIN users ON orders.user_id = users.user_id WHERE orders.order_status = 1 GROUP BY orders.user_id";
 $userwiseQuery = $connect->query($userwisesql);
 $userwieseOrder = $userwiseQuery->num_rows;
 
