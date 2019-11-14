@@ -22,6 +22,7 @@ if($result->num_rows > 0) {
  	$itemCountRow = $itemCountResult->fetch_row();
 
 
+    $diff = ($connect->query("SELECT DATEDIFF(NOW(), '$row[1]');"))->fetch_row();
  	// active 
  	
 
@@ -33,9 +34,18 @@ if($result->num_rows > 0) {
 	  <ul class="dropdown-menu">
 	   
 	    
-	    <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder('.$orderId.')"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>       
-	  </ul>
-	</div>';		
+	    <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder('.$orderId.')"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>';       
+	  
+     
+     $cancel='';
+     
+     if($diff[0]==0){
+         $button.='<li><a type="button" data-toggle="modal" data-target="#cancelOrderModal" id="cancelOrderModalBtn" onclick="cancelOrder('.$orderId.')"> <i class="glyphicon glyphicon-trash"></i> Cancel Order</a></li>';
+        
+     }
+     
+     
+    $button = $button.'</ul></div>';
 
  	$output['data'][] = array( 		
  		// image
