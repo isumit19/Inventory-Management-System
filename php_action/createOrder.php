@@ -20,6 +20,44 @@ if($_POST) {
   $gstn 				= $_POST['gstn'];
   $userid 				= $_SESSION['userId'];
 
+
+  	$flag = true;
+  	 $cnt = array();
+
+  	
+  	 	 $getQuantities = "SELECT product.product_id, product.productproduct.quantity FROM product";
+  	 	 $getData = $connect->query($getQuantities);
+  			 
+  	 	 while($temp = $getData->fetch_row())
+  	 	 {
+  	 	 	if(isset($cnt[$temp[0]]))
+  	 	 		$cnt[$temp[0]] = $cnt[$temp[0]] + $temp[1];
+  	 	 	else
+  	 	 		$cnt[$temp[0]] = $temp[1];
+  	 	 }
+
+  	 	// echo json_encode($cnt);
+   	for($x = 0; $x < count($_POST['productName']); $x++) {			
+	//	 $updateProductQuantitySql = "SELECT product.quantity FROM product WHERE product.product_id = ".$_POST['productName'][$x]."";
+	//	 $updateProductQuantityData = $connect->query($updateProductQuantitySql);
+		
+		$temp = $_POST['productName'][$x];
+
+		 $left = $cnt[$temp] - $_POST['quantity'][$x];
+		// echo $flag;
+		 if($left < 0)
+		 {
+		 	$flag = false;
+		 	$valid['success'] = false;
+		 	$valid['messages'] = "not sufficient quantity for ";
+		 }
+		 else
+		 	$cnt[$temp] = $cnt[$temp] - $_POST['quantity'][$x];
+		}
+
+
+	if($flag){
+
 				
 	$sql = "INSERT INTO orders (order_date, client_name, client_contact, sub_total, total_amount, discount, grand_total, paid, due, payment_type, gstn,order_status,user_id) VALUES ('$orderDate', '$clientName', '$clientContact', '$subTotalValue', '$totalAmountValue', '$discount', '$grandTotalValue', '$paid', '$dueValue', $paymentType,$gstn, 1,$userid)";
 	
@@ -61,7 +99,7 @@ if($_POST) {
 
 	$valid['success'] = true;
 	$valid['messages'] = "Successfully Added";		
-	
+	}
 	$connect->close();
 
 	echo json_encode($valid);
