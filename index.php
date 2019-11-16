@@ -76,12 +76,11 @@ if($_POST) {
   <!-- bootstrap js -->
 	<script src="assests/bootstrap/js/bootstrap.min.js"></script>
 </head>
-  <body>
+  <body style="background-image:url('images.jpg');">
 	
-        <div id="home" class="home-bg" style="background-color: #000000;
-background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);">
+        <div id="home" class="home-bg" style="background-color:rgba(0, 0, 0, 0.6);padding-top:100px">
                             
-                    <div class="container">
+                    <div class="container" >
                         <div class="row">
                         
                          
@@ -90,10 +89,10 @@ background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);">
                                 <h1>INVENTORY MANAGEMENT SYSTEM</h1></div></div>
                         
                         </div>
-            </div>
             
             
-                <div class="container">
+            
+                <div class="container" >
                     
                     <div class="row login-box">
                         
@@ -154,6 +153,7 @@ background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);">
                 
                 </div>
             
+            </div>
             </div>
       
             

@@ -35,7 +35,7 @@ $(document).ready(function() {
 			var orderDate = $("#orderDate").val();
 			var clientName = $("#clientName").val();
 			var clientContact = $("#clientContact").val();
-			var paid = $("#paid").val();
+			//var paid = $("#paid").val();
 			var discount = $("#discount").val();
 			var paymentType = $("#paymentType").val();
 				
@@ -62,13 +62,7 @@ $(document).ready(function() {
 				$('#clientContact').closest('.form-group').addClass('has-success');
 			} // /else
 
-			if(paid == "") {
-				$("#paid").after('<p class="text-danger"> The Paid field is required </p>');
-				$('#paid').closest('.form-group').addClass('has-error');
-			} else {
-				$('#paid').closest('.form-group').addClass('has-success');
-			} // /else
-
+			
 			if(discount == "") {
 				$("#discount").after('<p class="text-danger"> The Discount field is required </p>');
 				$('#discount').closest('.form-group').addClass('has-error');
@@ -127,7 +121,7 @@ $(document).ready(function() {
 	   	} // for       	
 	   	
 
-			if(orderDate && clientName && clientContact && paid && discount && paymentType) {
+			if(orderDate && clientName && clientContact  && discount && paymentType) {
 				if(validateProduct == true && validateQuantity == true) {
 					// create order button
 					// $("#createOrderBtn").button('loading');
@@ -406,7 +400,7 @@ function subAmount() {
 		$("#grandTotalValue").val(totalAmount);
 	} // /else discount	
 
-	var paidAmount = $("#paid").val();
+	/*var paidAmount = $("#paid").val();
 	if(paidAmount) {
 		paidAmount =  Number($("#grandTotal").val()) - Number(paidAmount);
 		paidAmount = paidAmount.toFixed(2);
@@ -415,7 +409,7 @@ function subAmount() {
 	} else {	
 		$("#due").val($("#grandTotal").val());
 		$("#dueValue").val($("#grandTotal").val());
-	} // else
+	} // else*/
 
 } // /sub total amount
 
@@ -434,7 +428,7 @@ function discountFunc() {
  	} else {
  	}
 
- 	var paid = $("#paid").val();
+ 	/*var paid = $("#paid").val();
 
  	var dueAmount; 	
  	if(paid) {
@@ -446,11 +440,11 @@ function discountFunc() {
  	} else {
  		$("#due").val($("#grandTotal").val());
  		$("#dueValue").val($("#grandTotal").val());
- 	}
+ 	}*/
 
 } // /discount function
 
-function paidAmount() {
+/*function paidAmount() {
 	var grandTotal = $("#grandTotal").val();
 
 	if(grandTotal) {
@@ -459,7 +453,7 @@ function paidAmount() {
 		$("#due").val(dueAmount);
 		$("#dueValue").val(dueAmount);
 	} // /if
-} // /paid amoutn function
+} // /paid amoutn function*/
 
 
 function resetOrderForm() {

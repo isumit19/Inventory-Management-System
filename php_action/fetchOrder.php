@@ -2,7 +2,12 @@
 
 require_once 'core.php';
 
-$sql = "SELECT order_id, order_date, client_name, client_contact, grand_total FROM orders WHERE order_status = 1";
+$id = $_SESSION['userId'];
+
+$sql = "SELECT order_id, order_date, client_name, client_contact, total_amount, discount FROM orders WHERE order_status = 1";
+if(isset($_SESSION['userId']) && $_SESSION['userId']!=1){
+    $sql = "SELECT order_id, order_date, client_name, client_contact, total_amount,discount FROM orders WHERE user_id = ".$id." and order_status = 1";
+}
 $result = $connect->query($sql);
 
 
@@ -33,6 +38,7 @@ if($result->num_rows > 0) {
 	  </button>
 	  <ul class="dropdown-menu">
 	   
+       <li><a href="orders.php?o=editOrd&i='.$orderId.'" id="editOrderModalBtn"> <i class="glyphicon glyphicon-edit"></i> View</a></li>
 	    
 	    <li><a type="button" data-toggle="modal" data-target="#removeOrderModal" id="removeOrderModalBtn" onclick="removeOrder('.$orderId.')"> <i class="glyphicon glyphicon-trash"></i> Remove</a></li>';       
 	  
@@ -57,7 +63,7 @@ if($result->num_rows > 0) {
  		// client contact
  		$row[3], 		 	
  		$itemCountRow, 		 	
- 		$row[4],
+ 		$row[4]-$row[5],
  		// button
  		$button 		
  		); 	
