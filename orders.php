@@ -105,7 +105,7 @@ if($_GET['o'] == 'add') {
 			  					<select class="form-control" name="productName[]" id="productName<?php echo $x; ?>" onchange="getProductData(<?php echo $x; ?>)" >
 			  						<option value="">~~SELECT~~</option>
 			  						<?php
-			  							$productSql = "SELECT * FROM product WHERE active = 1 AND status = 1 AND quantity != 0";
+			  							$productSql = "SELECT * FROM product WHERE active = 1 AND status = 1 AND quantity > 0";
 			  							$productData = $connect->query($productSql);
 
 			  							while($row = $productData->fetch_array()) {									 		
@@ -288,7 +288,7 @@ if($_GET['o'] == 'add') {
 			  		<tr>			  			
 			  			<th style="width:40%;">Product</th>
 			  			<th style="width:20%;">Rate</th>
-			  			<th style="width:15%;">Available Quantity</th>			  			
+			  						  			
 			  			<th style="width:15%;">Quantity</th>			  			
 			  			<th style="width:15%;">Total</th>			  			
 			  			<th style="width:10%;"></th>
@@ -296,8 +296,8 @@ if($_GET['o'] == 'add') {
 			  	</thead>
 			  	<tbody>
 			  		<?php
-
-			  		$orderItemSql = "SELECT order_item.order_id, order_item.product_id, order_item.quantity, order_item.rate, order_item.total FROM order_item WHERE order_item.order_id = {$orderId}";
+// order_item.rate, order_item.total
+			  		$orderItemSql = "SELECT order_item.order_id, order_item.product_id, order_item.quantity FROM order_item WHERE order_item.order_id = {$orderId}";
 						$orderItemResult = $connect->query($orderItemSql);
 						// $orderItemData = $orderItemResult->fetch_all();						
 						
@@ -305,8 +305,18 @@ if($_GET['o'] == 'add') {
 			  		$arrayNumber = 0;
 			  		// for($x = 1; $x <= count($orderItemData); $x++) {
 			  		$x = 1;
-			  		while($orderItemData = $orderItemResult->fetch_array()) { 
+			  		while($orderItemData = $orderItemResult->fetch_array()) {
+                        
+                        $sql = "Select rate from product where product_id={$orderItemData['product_id']}";
+                        $ratedata=$connect->query($sql);
+                        $rate = $ratedata->fetch_row();
+                        
+                        $orderItemData['rate']=$rate[0];    
+                        $orderItemData['total']=($rate[0])*($orderItemData['quantity']);
+                    
 			  			// print_r($orderItemData); ?>
+                    
+                    
 			  			<tr id="row<?php echo $x; ?>" class="<?php echo $arrayNumber; ?>">			  				
 			  				<td style="margin-left:20px;">
 			  					<div class="form-group">
@@ -336,28 +346,7 @@ if($_GET['o'] == 'add') {
 			  					<input type="text" name="rate[]" id="rate<?php echo $x; ?>" autocomplete="off" disabled="true" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
 			  					<input type="hidden" name="rateValue[]" id="rateValue<?php echo $x; ?>" autocomplete="off" class="form-control" value="<?php echo $orderItemData['rate']; ?>" />			  					
 			  				</td>
-							<td style="padding-left:20px;">
-			  					<div class="form-group">
-									<?php
-			  							$productSql = "SELECT * FROM product WHERE active = 1 AND status = 1 AND quantity != 0";
-			  							$productData = $connect->query($productSql);
-
-			  							while($row = $productData->fetch_array()) {									 		
-			  								$selected = "";
-			  								if($row['product_id'] == $orderItemData['product_id']) { 
-			  									echo "<p id='available_quantity".$row['product_id']."'>".$row['quantity']."</p>";
-											}
-			  								 else {
-			  									$selected = "";
-			  								}
-
-			  								//echo "<option value='".$row['product_id']."' id='changeProduct".$row['product_id']."' ".$selected." >".$row['product_name']."</option>";
-										 	} // /while 
-
-			  						?>
-									
-			  					</div>
-			  				</td>
+							
 			  				<td style="padding-left:20px;">
 			  					<div class="form-group">
 			  					<input type="number" name="quantity[]" id="quantity<?php echo $x; ?>" onkeyup="getTotal(<?php echo $x ?>)" autocomplete="off" class="form-control" min="1" value="<?php echo $orderItemData['quantity']; ?>" />

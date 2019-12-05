@@ -21,8 +21,16 @@ if($_POST) {
   //$gstn 				= $_POST['gstn'];
   $userid 				= $_SESSION['userId'];
 
+        $flag = true;
+        if($discount < 0)
+        {
+            $flag = false;
+            $valid['success'] = false;
+		 	$valid['messages'] = "Invalid discount!!";
+        }
+      	
     
-      	$flag = true;
+        if($flag){
   	    $cnt = array();
   	    $cntOfCustomerQuantity = array();
   	 	 $getQuantities = "SELECT product.product_id, product.quantity FROM product";
@@ -42,7 +50,7 @@ if($_POST) {
 		
 		$temp = $_POST['productName'][$x];
 		 $left = $cnt[$temp] - $_POST['quantity'][$x];
-         if(isset($cntOfCustomerQuantity[$temp]) == true)
+         if(isset($cntOfCustomerQuantity[$temp]))
          $cntOfCustomerQuantity[$temp] += $_POST['quantity'][$x];
          else
          $cntOfCustomerQuantity[$temp] = $_POST['quantity'][$x];
@@ -59,6 +67,8 @@ if($_POST) {
 		 else
 		 	$cnt[$temp] = $cnt[$temp] - $_POST['quantity'][$x];
 		}
+            
+        }
 	if($flag){
 
 				
@@ -90,9 +100,10 @@ if($_POST) {
 				$connect->query($updateProductTable);
 
 				// add into order_item
-                if(isset($alreadyInserted[$_POST['productName'][$x]]) == false){
-				$orderItemSql = "INSERT INTO order_item (order_id, product_id, quantity, rate, total, order_item_status) 
-				VALUES ('$order_id', '".$_POST['productName'][$x]."', '".$cntOfCustomerQuantity[$_POST['productName'][$x]]."', '".$_POST['rateValue'][$x]."', '".$_POST['totalValue'][$x]."', 1)";
+                if(isset($alreadyInserted[$_POST['productName'][$x]])==false){
+            
+				$orderItemSql = "INSERT INTO order_item (order_id, product_id, quantity) 
+				VALUES ('$order_id', ".$_POST['productName'][$x].", ".$cntOfCustomerQuantity[$_POST['productName'][$x]].")";
                     
                     $alreadyInserted[$_POST['productName'][$x]] = 1;
                     $connect->query($orderItemSql);

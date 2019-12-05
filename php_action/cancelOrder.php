@@ -13,7 +13,7 @@ if($orderId) {
     
  $sql = "UPDATE orders SET order_status = 2 WHERE order_id = {$orderId}";
 
- $orderItem = "UPDATE order_item SET order_item_status = 2 WHERE  order_id = {$orderId}";
+ 
         
     $Items = $connect->query("SELECT product_id, quantity from order_item where order_id = {$orderId};");
     
@@ -44,7 +44,7 @@ if($orderId) {
     }
 //$product = "UPDATE product SET quantity = quantity"
 
- if(TRUE) {
+ if($connect->query($sql) === TRUE) {
  	$valid['success'] = true;
 	$valid['messages'] = "Successfully Cancelled";	
  } else {

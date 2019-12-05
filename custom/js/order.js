@@ -55,8 +55,9 @@ $(document).ready(function() {
 				$('#clientName').closest('.form-group').addClass('has-success');
 			} // /else
 
-			if(clientContact == "") {
-				$("#clientContact").after('<p class="text-danger"> The Contact field is required </p>');
+            var flag = (/^\d{10}$/.test(clientContact));
+			if(clientContact == "" || flag==false) {
+				$("#clientContact").after('<p class="text-danger"> The Contact field is not valid </p>');
 				$('#clientContact').closest('.form-group').addClass('has-error');
 			} else {
 				$('#clientContact').closest('.form-group').addClass('has-success');
@@ -121,7 +122,7 @@ $(document).ready(function() {
 	   	} // for       	
 	   	
 
-			if(orderDate && clientName && clientContact  && discount && paymentType) {
+			if(orderDate && clientName && clientContact  && discount && paymentType && flag==true) {
 				if(validateProduct == true && validateQuantity == true) {
 					// create order button
 					// $("#createOrderBtn").button('loading');
